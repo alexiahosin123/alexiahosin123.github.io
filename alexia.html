@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+  <title>lexi`s website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap" rel="stylesheet">
+  <style>
+    body {
+      text-align: center;
+      background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2UGC-cl_3Nt8yeusgVC-tShcKg7F6RcNhbQ&usqp=CAU");
+      background-size: cover;
+      background-position: center;
+      color: brown;
+      font-family: Great Vibes;
+    }
+    p {
+      font-size: 30px;
+      font-family: Roboto Slab;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+      font-family: Great Vibes;
+    }
+    input[type="submit"] {
+      background: skyblue;
+      color: brown;
+    }
+    img {
+      width: 300px;
+      border-radius: 50px;
+      }
+  </style>
+</head>
+<body>
+  <h1>hello everyone</h1>
+  <img src="https://i0.wp.com/i.pinimg.com/736x/61/87/be/6187beb0b0e94bfae3bc87acc100d9e3.jpg?resize=650,400">
+  <p>hello my name is Alexia, but you can call me lexi, hope we can become friends <3 </p>
+  <input id="Name" placeholder="user`s name">
+  <input id="Email" placeholder="email">
+  <input id="submit" type="submit">
+</body>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDvU7qYVIdtXOuSGLY6Vb-z7ZzhRgJh2lQ",
+    authDomain: "alexia-project-2a60a.firebaseapp.com",
+    projectId: "alexia-project-2a60a",
+    storageBucket: "alexia-project-2a60a.appspot.com",
+    messagingSenderId: "698683777157",
+    appId: "1:698683777157:web:af546d96ed0d79867449ec"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const Name = document.querySelector("#Name") 
+  const Email = document.querySelector("#Email")
+  document.querySelector('#submit').addEventListener('click', Submit)
+  
+function Submit() {
+  const timestamp = buildTimestamp()
+  
+  set(ref(db, timestamp), {
+	  Name: Name.value,
+      email: Email.value,
+  });
+
+  Name.value = ""
+  Email.value = ""
+}
+ 
+function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+	
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+ 
+</script>
+  
+
